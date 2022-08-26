@@ -1,0 +1,218 @@
+<div class="m-2">
+    <button (click)="onBackClick()" class="btn btn-primary">Back</button>
+</div>
+<div class="qnA-hr-line"></div>
+
+   
+<!-- <div class="justify-content-center">Float left on viewports sized MD (medium) or wider</div><br> -->
+<div class="container-fluid">
+    <div class="row ">
+        <div class="col-9 mt-3 mt-3" style="color: #003b71">
+            <strong>Add Join</strong>
+        </div>
+    </div>
+    <div class="row container-fluid mt-3">
+        <div class="row gx-5">
+            <div class="col-3">
+                <div class="p-3 containerDesign">
+                    <label>Drag a Table to Left Source</label>
+                     
+                    <div class="source-list" style="background-color: #e7f0f9;">
+                        <strong>{{selectedSource1.domainName}}</strong> 
+                      </div>   
+                      <div class="overflow-scrollbar"> 
+                    <div id="all" cdkDropList [cdkDropListData]="all" cdkDropListConnectedTo="source1"
+                        class="example-list" (cdkDropListDropped)="drop($event)"
+                        [cdkDropListEnterPredicate]="noReturnPredicate">
+                        <div class="example-box" *ngFor="let dataSource1 of all" [cdkDragData]="dataSource1" cdkDrag>
+                            {{dataSource1.entityName}}</div>
+                    </div>
+                </div> 
+                    <label class="mt-5">Drag a Table to Right Source</label>
+
+                    <div class="source-list" style="background-color: #e7f0f9;">
+                        <strong>{{selectedSource2.domainName}}</strong> 
+                      </div>
+                      <div class="overflow-scrollbar"> 
+                    <div id="source" cdkDropList [cdkDropListData]="source" cdkDropListConnectedTo="source2"
+                        class="example-list" (cdkDropListDropped)="dropSource($event)"
+                        [cdkDropListEnterPredicate]="noReturnPredicateSource">
+                        <div class="example-box" *ngFor="let dataSource2 of source" [cdkDragData]="dataSource2" cdkDrag>
+                            {{dataSource2.entityName}}</div>
+                    </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-9">
+
+                <div class="p-3 containerDesign overflow-scrollbar-right">
+                    <div class="rowmargin" >
+                        <div class="row col-12">
+                            <div class="headercss" style="color: #b4b4b4;">
+                           
+                                <div class="row" style="margin-left: 1%;margin-right: 1%;" >
+                                    <div class="col-md-6">
+                                        <div class="lab-sty">Left Source</div>
+                                        <div class="card card-height card-border">
+                                            <div id="source1" cdkDropList [cdkDropListSortingDisabled]="true"
+                                                [cdkDropListData]="source1" cdkDropListConnectedTo="all"
+                                                class="example-list" (cdkDropListDropped)="drop($event)"
+                                                [cdkDropListEnterPredicate]="evenPredicate">
+                                                <div class="example-box" *ngFor="let dataSource1 of source1" cdkDrag
+                                                    [cdkDragData]="dataSource1">{{dataSource1.entityName}}</div>
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="lab-sty">Right Source</div>
+                                        <div class="card card-height card-border">
+
+                                           
+                                            <div id="source2" cdkDropList [cdkDropListSortingDisabled]="true"
+                                                [cdkDropListData]="source2" cdkDropListConnectedTo="source2"
+                                                class="example-list" (cdkDropListDropped)="dropSource($event)"
+                                                [cdkDropListEnterPredicate]="evenPredicateSource">
+                                                <div class="example-box" *ngFor="let dataSource2 of source2" cdkDrag
+                                                    [cdkDragData]="dataSource2">{{dataSource2.entityName}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+<br>
+
+
+
+
+                               <div class="row card-border mb-3" style="margin-left: 1%;margin-right: 1%;">
+                                 <form [formGroup]="myJoinForm">
+                                    <div class="row">
+                                         <div class="col-4" >
+                                                 <label class="pt-3 lab-sty">Left Source_Table-1</label>
+                                                 <select class="form-control mb-3"
+                                                 formControlName="datasource">
+                                                   <option disabled selected value="">Select Column</option>
+                                                   <option
+                                                     *ngFor="let col of leftcolumn"
+                                                     [ngValue]="col"
+                                                   >
+                                                     {{ col }}
+                                                   </option>
+                                                 </select>
+                                           
+                                         </div>
+                                         <div class="col-md-4">
+                                         
+     
+                                                 <label class="pt-3 lab-sty">Filter</label>
+                                                 <select class="form-control mb-3"
+                                                 formControlName="table">
+                                                   <option disabled selected value="">Operation</option>
+                                                   <option
+                                                     *ngFor="let sortItem of operations"
+                                                     [ngValue]="sortItem"
+                                                   >
+                                                     {{ sortItem }}
+                                                   </option>
+                                                 </select>
+                                         
+                                         </div>
+                                         <div class="col-md-4">
+                                             
+     
+                                                 <label class="pt-3 lab-sty">Right Source_Table-3</label>
+                                                 <select class="form-control mb-3" 
+                                                 formControlName="column">
+                                                     <option disabled selected value="">Select Column</option>
+                                                     <option
+                                                       *ngFor="let colu of rightcolumn"
+                                                       [ngValue]="colu"
+                                                     >
+                                                       {{ colu }}
+                                                     </option>
+                                                 </select>
+                                            
+                                         </div>
+                                        </div>
+                                       </form> 
+                                       
+
+                                     <div class="container mb-3" style="margin-left: 8%;" >
+                                        <div class="row" >
+                                            
+                                          <div class="col-3" >
+                                            <img
+                                            style="width:70px"
+                                            src="../../../assets/img/FullOuter.svg"
+                                            (click)="outerJoinClick()"
+                                            [ngClass]="statusClass" (click)="setActiveClass()"
+                                            
+                                          />
+                                         <div> <label class="lab-sty">Full Outer</label></div>
+                                          </div>
+                                          <div class="col-3">
+                                            <img
+                                            style="width:70px"
+                                            src="../../../assets/img/Inner.svg"
+                                            [ngClass]="innerClass" (click)="setActiveInner()"
+                                          />
+                                          <div> <label class="lab-sty-inner">Inner</label></div>
+                                          </div>
+                                           <div class="col-3">
+                                            <img
+                                         style="width:70px"
+                                         src="../../../assets/img/Left Outer.svg"
+                                         [ngClass]="leftClass" (click)="setActiveLeft()"
+                                       />
+                                       <div> <label class="lab-sty">Left Outer</label></div>
+                                          </div>
+                                          <div class="col-3">
+                                            <img
+                                            style="width:70px"
+                                            src="../../../assets/img/Right Outer.svg"
+                                            [ngClass]="rightClass" (click)="setActiveRight()"
+                                          />
+                                          <div> <label class="lab-sty">Right Outer</label></div>
+                                            </div>
+                                          
+                                        </div>
+                                      </div>
+
+                                   
+                                </div> 
+                                     
+
+                                   
+                                     
+                                         <div class="float-right">
+                                     
+                                             <button type="button" class="btn btn-primary" (click)="onClear()">Clear</button
+                                     
+                                             >&nbsp;&nbsp;
+                                     
+                                             <button type="button"  class="btn btn-primary">Add</button>
+                                     
+                                           </div>
+                                 
+
+                            </div>
+                        </div>
+
+                        <div class="row col-12 rowboxcss">
+                            <div class="boxcss textAlignment" style="color: #b4b4b4">
+                                You have not made any Join Operations yet
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
